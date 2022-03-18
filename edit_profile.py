@@ -2,12 +2,7 @@ import main
 from selenium.webdriver.common.by import By
 
 
-class EditProfile(main.Driver):
-    def __init__(self, url, browser, username, password) -> None:
-        self.url = url
-        self.browser = browser
-        self.username = username
-        self.password = password
+class EditationProfile(main.Driver):     
 
     def get_on_profile_table_page(self):
         self.get_on_page_driver('https://cs.laurie-project.com/profile')
@@ -16,16 +11,23 @@ class EditProfile(main.Driver):
         self.clear_input_field(input_field)
         self.fill_in_input_field(input_field, content)
 
+    def get_first_name_input_field_element(self):
+        return self.driver.find_element(By.ID, 'appbundle_users_firstName')
+
+    def get_last_name_input_field_element(self):
+        return self.driver.find_element(By.ID, 'appbundle_users_lastName')
+
     def submit_changes(self):
+        password_input_field = self.driver.find_element(By.ID, 'appbundle_users_plainPassword_first')
+        password_input_field_confirm = self.driver.find_element(By.ID, 'appbundle_users_plainPassword_second')
+        self.edit_input_field(password_input_field, self.password)
+        self.edit_input_field(password_input_field_confirm, self.password)
         self.driver.find_element(By.ID, 'appbundle_users_save').click()
 
     def get_on_edit_profile_page(self):
         self.get_on_page_driver('https://cs.laurie-project.com/profile/edit')
 
     def get_full_name_from_table(self):
-        table = self.driver.find_element(By.TAG_NAME, 'tablebody')
-        return [self.driver.find_element(By.CLASS_NAME, 'text-left').text for table_value in table][0]
-
-
-
+        table = self.driver.find_element(By.TAG_NAME, 'tbody')
+        return table.find_elements(By.CLASS_NAME, 'text-left')[0].text
 

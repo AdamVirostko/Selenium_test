@@ -5,6 +5,7 @@ from selenium.common.exceptions import ElementNotInteractableException
 
 
 class Driver:
+    
     def __init__(self, browser, url, password, username) -> None:
         self.url = url
         self.browser = browser
@@ -24,6 +25,7 @@ class Driver:
 
     def login(self):
         self.get_on_page_driver('https://cs.laurie-project.com/login')
+        self.pass_notification_element()
         username_input_field = self.driver.find_element(By.NAME, '_username')
         password_input_field = self.driver.find_element(By.NAME, '_password')
 
@@ -35,8 +37,8 @@ class Driver:
 
         self.driver.find_element(By.CLASS_NAME, 'login-button').click()
 
-    def clear_input_field(self, input_field):
-        input_field.clear()
+    def clear_input_field(self, input_field_element):
+        input_field_element.clear()
 
     def fill_in_input_field(self, input_field, content):
         input_field.send_keys(content)
@@ -50,6 +52,9 @@ class Driver:
             self.driver.find_element(By.CLASS_NAME, 'success-button').click()
         except ElementNotInteractableException: 
             ...
+
+    def return_current_url(self):
+        return self.driver.current_url
 
     def quit_driver(self):
         self.driver.close()

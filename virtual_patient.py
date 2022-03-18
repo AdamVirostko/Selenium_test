@@ -28,7 +28,8 @@ if __name__ == '__main__':
 
     browser = 'firefox'
     url = 'https://cs.laurie-project.com/vp'
-    
+
+
     test = VirtualPatient(browser, url)
     test.set_up_driver()
     test.get_on_page_driver(url)
