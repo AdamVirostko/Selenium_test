@@ -1,17 +1,19 @@
-from selenium.webdriver.common.by import By
 import main
+from selenium.webdriver.common.by import By
 
 
 class VirtualPatient(main.Driver):
-    def __init__(self, browser, url) -> None:
-        self.url = url
-        self.browser = browser
+    def __init__(self, browser, url, password, username) -> None:
+        super().__init__(browser, url, password, username)
 
     def get_scenarios(self):
-        return self.driver.find_elements(By.XPATH, '//a[@title="Spustit hru"]')
+        return self.driver.find_elements(By.XPATH, "//a[@title='Spustit hru']")
 
     def get_links(self):
         return [element.get_attribute('href') for element in self.get_scenarios()]
+
+    def get_current_page_heading(self):
+        return self.driver.find_element(By.CLASS_NAME, "scenarioH2title").text
 
     def get_article_headings(self):
         return [element.find_element(By.TAG_NAME, 'h4').text for element in self.get_scenarios()]

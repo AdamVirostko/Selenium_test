@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 
 
 class EditationProfile(main.Driver):     
+    def __init__(self, browser, url, password, username) -> None:
+        super().__init__(browser, url, password, username)
 
     def get_on_profile_table_page(self):
         self.get_on_page_driver('https://cs.laurie-project.com/profile')
